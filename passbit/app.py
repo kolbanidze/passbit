@@ -5,6 +5,7 @@ from .create_db import CreateDB
 from .show_db_info import ShowDBInfo
 from .password_generator import PasswordGenerator
 from .language import AppPy
+from .settings_editor import SettingsEditor
 
 
 class App(CTk):
@@ -42,10 +43,15 @@ class App(CTk):
                                                  command=lambda: PasswordGenerator().mainloop())
         main_menu_password_generator.grid(row=4, sticky="nsew", padx=20, pady=10)
 
+        main_menu_settings_editor = CTkButton(self,
+                                              text=self.lang.settings_editor,
+                                              command=lambda: SettingsEditor().mainloop())
+        main_menu_settings_editor.grid(row=5, sticky="nsew", padx=20, pady=10)
+
         exit_btn = CTkButton(self,
                              text=self.lang.exit_btn,
                              command=lambda: self.destroy())
-        exit_btn.grid(row=5, sticky="nsew", padx=20, pady=10)
+        exit_btn.grid(row=6, sticky="nsew", padx=20, pady=10)
 
     def hide_window(self) -> None:
         """Just hides window"""

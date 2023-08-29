@@ -18,18 +18,20 @@ def get_os_language() -> str:
             return 'en'
 
 
-VERSION = "0.1.0"
-NAME = "PassBit"
+VERSION = '0.1.1'
+NAME = 'PassBit'
 
 # PassBit DataBase
-FILE_EXTENSION = ".pbdb"
+FILE_EXTENSION = '.pbdb'
 # PassBit EXport
-EXPORT_FILE_EXTENSION = ".pbex"
+EXPORT_FILE_EXTENSION = '.pbex'
 
 # Supported languages: 'ru', 'en'
-# Values: get_os_language(), ru, en
-LANGUAGE = get_os_language()
+# Values: os_default, 'ru', 'en'
+LANGUAGE = 'ru'
 
+if LANGUAGE == 'os_default':
+    LANGUAGE = get_os_language()
 # Database viewer screen size constants
 DB_VIEWER_MIN_WIDTH = 800
 DB_VIEWER_MIN_HEIGHT = 400
@@ -41,7 +43,7 @@ DEFAULT_ARGON2ID_PARALLELISM = 4
 DEFAULT_SALT_SIZE = 8
 
 # Key File Generator URL
-THE_CAT_API_URL = "https://api.thecatapi.com/v1/images/search"
+THE_CAT_API_URL = 'https://api.thecatapi.com/v1/images/search'
 
 # Show 'Update' button in 'Database viewer'
-SHOW_UPDATE_BUTTON = False
+SHOW_UPDATE_BUTTON = True

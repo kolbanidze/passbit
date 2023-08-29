@@ -1,0 +1,2 @@
+include passbit/words/english_words_10k.txt
+include passbit/words/russian_words_10k.txt

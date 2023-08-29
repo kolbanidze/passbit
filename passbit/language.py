@@ -14,12 +14,14 @@ class AppPy:
             self.create_db_btn = "Create database"
             self.show_db_info = "Show database info"
             self.password_generator = "Password Generator"
+            self.settings_editor = "Settings Editor"
             self.exit_btn = "Exit"
         elif lang == 'ru':
             self.open_db_btn = "Открыть базу данных"
             self.create_db_btn = "Создать базу данных"
             self.show_db_info = "Информация о базе данных"
             self.password_generator = "Генератор паролей"
+            self.settings_editor = "Редактор настроек"
             self.exit_btn = "Выход"
         else:
             raise UnsupportedLanguage
@@ -465,5 +467,53 @@ class KeyFileGeneratorPy:
             self.to_bytes = "Максимальное кол-во байтов"
             self.create_file = "Создать файл"
             self.msg_box_bytes_message = "Случайные байты были успешно записаны"
+        else:
+            raise UnsupportedLanguage
+
+
+class SettingsEditorPy:
+    def __init__(self, lang=LANGUAGE):
+        if lang == 'en':
+            self.title = "Settings Editor"
+            self.version = "Version"
+            self.name = "Name"
+            self.file_extension = "File extension"
+            self.export_extension = "Export file extension"
+            self.os_default = "System default"
+            self.language = "Language",
+            self.db_min_width = "DB minimal width"
+            self.db_min_height = "DB minimal height"
+            self.time_cost = "Transform rounds"
+            self.memory_cost = "Memory usage"
+            self.parallelism = "Parallelism"
+            self.cat_api = "Link to cat API :3"
+            self.update_button = "Show update button"
+            self.yes = "Yes"
+            self.no = "No"
+            self.save = "Save"
+            self.salt = "Salt size (bytes)"
+            self.title = "Success"
+            self.message = "Settings were successfully edited"
+        elif lang == 'ru':
+            self.title = "Редактор настроек"
+            self.version = "Версия"
+            self.name = "Название"
+            self.file_extension = "Расширение файла"
+            self.export_extension = "Расширение файла при экспорте"
+            self.os_default = "Язык системы"
+            self.language = "Язык"
+            self.db_min_width = "Минимальная длина БД"
+            self.db_min_height = "Минимальная высота БД"
+            self.time_cost = "Циклы преобразования"
+            self.memory_cost = "Использование памяти"
+            self.parallelism = "Параллелизм"
+            self.cat_api = "Ссылка на Кошачье API :3"
+            self.update_button = "Показывать кнопку обновления"
+            self.yes = "Да"
+            self.no = "Нет"
+            self.save = "Сохранить"
+            self.salt = "Размер соли (байт)"
+            self.title = "Успех"
+            self.message = "Настройки были успешно изменены"
         else:
             raise UnsupportedLanguage

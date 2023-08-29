@@ -3,7 +3,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/kolbanidze/passbit/badge.svg)](https://snyk.io/test/github/kolbanidze/passbit)
 [![PyPI version](https://badge.fury.io/py/PassBit.svg)](https://badge.fury.io/py/PassBit)
 
-
+Open-source cross-platform encrypted password manager
 
 # Security
 ## Storing secrets

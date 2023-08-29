@@ -5,4 +5,4 @@ pycryptodome
 pyotp
 pyperclip
 Requests
-setuptools
+setuptools>=65.5.1
