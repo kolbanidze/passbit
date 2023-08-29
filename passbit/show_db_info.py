@@ -3,6 +3,8 @@ from sqlite3 import connect as sql_connect
 from tkinter.filedialog import askopenfile
 from .settings import NAME, FILE_EXTENSION
 from .language import ShowDbInfoPy
+from sqlite3 import OperationalError, DatabaseError
+from CTkMessagebox import CTkMessagebox
 
 
 class ShowDBInfo(CTkToplevel):
@@ -11,6 +13,7 @@ class ShowDBInfo(CTkToplevel):
         super().__init__()
         self.lang = ShowDbInfoPy()
         self.title(self.lang.title)
+        self.after(100, self.lift)
 
         self.columnconfigure(0, weight=2)
         open_db_btn = CTkButton(self, text=self.lang.open_db,
@@ -25,7 +28,15 @@ class ShowDBInfo(CTkToplevel):
         # Gets database header
         db = sql_connect(self.db_filename)
         c = db.cursor()
-        c.execute("SELECT * FROM db_header")
+        try:
+            c.execute("SELECT * FROM db_header")
+        except (OperationalError, DatabaseError):
+            msg = CTkMessagebox(icon="cancel",
+                                title=self.lang.msg_title,
+                                message=self.lang.message)
+            msg.get()
+            self.destroy()
+            return
         db_header = c.fetchall()[0]
 
         version_label = CTkLabel(self, text=self.lang.version)

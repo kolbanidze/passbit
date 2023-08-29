@@ -1,7 +1,7 @@
 # Passbit documentation
 
 ## Main menu
-At main menu you can _open db, create db, show db info, generate password_ and _exit_.
+At main menu you can _open db, create db, show db info, generate password_, edit settings and _exit_.
 
 _app.py_
 
@@ -85,6 +85,11 @@ _import_export_db.py_
 Just clears clipboard. Idk what to write here else
 
 _OpenDB.clear_clipboard()_
+
+## Edit settings
+Shows all settings and allows to edit them. Some entries are read only (_VERSION_ and _NAME_)
+
+_settings_editor.py_
 
 ## Exit
 

@@ -11,6 +11,7 @@ class SettingsEditor(CTkToplevel):
         super().__init__()
         self.lang = SettingsEditorPy()
         self.title(self.lang.title)
+        self.after(100, self.lift)
 
         version_label = CTkLabel(self, text=self.lang.version)
         version_label.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")

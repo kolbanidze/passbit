@@ -17,6 +17,8 @@ from CTkMessagebox import CTkMessagebox
 from sqlite3 import Connection, Cursor
 from .language import ImportExportDbPy
 from .key_file_generator import KeyFileGenerator
+from os import name
+from json.decoder import JSONDecodeError
 
 
 class ImportExportDB(CTkToplevel):
@@ -29,6 +31,7 @@ class ImportExportDB(CTkToplevel):
         super().__init__()
         self.lang = ImportExportDbPy()
         self.key_file_status = False
+        self.after(100, self.lift)
 
         self.title(self.lang.title)
         self.db = db
@@ -81,7 +84,6 @@ class ImportExportDB(CTkToplevel):
         generate_key_file_btn = CTkButton(left_frame, text=self.lang.generate_key_file,
                                           command=lambda: KeyFileGenerator().mainloop())
         generate_key_file_btn.grid(row=5, pady=20, padx=15)
-
 
         # ----- Right Frame ----- #
 
@@ -258,7 +260,12 @@ class ImportExportDB(CTkToplevel):
     def save_export_filedialog(self) -> None:
         """Handles filedialog"""
         files = [(f'{NAME} export', f'{EXPORT_FILE_EXTENSION}'), ('All files', '*.*')]
-        file = asksaveasfile(filetypes=files)
+        if name == 'nt':
+            defaultextension = '*.*'
+        else:
+            defaultextension = None
+
+        file = asksaveasfile(filetypes=files, defaultextension=defaultextension)
         # Checking if db file was selected
         if locals()['file'] is not None:
             filename = basename(file.name)
@@ -365,7 +372,12 @@ class ImportExportDB(CTkToplevel):
     def import_db_filedialog(self) -> None:
         """Handles import filedialog"""
         files = [(f'{NAME} import', f'{EXPORT_FILE_EXTENSION}'), ('All files', '*.*')]
-        file = askopenfile(filetypes=files)
+        if name == 'nt':
+            defaultextension = '*.*'
+        else:
+            defaultextension = None
+
+        file = askopenfile(filetypes=files, defaultextension=defaultextension)
         # Checking if db file was selected
         if locals()['file'] is not None:
             filename = basename(file.name)
@@ -381,7 +393,15 @@ class ImportExportDB(CTkToplevel):
             self.salt_size_entry.configure(state="normal")
 
             with open(self.fullpath_to_export, 'r') as file:
-                self.export = json_decode(file.read())
+                try:
+                    self.export = json_decode(file.read())
+                except JSONDecodeError:
+                    msg = CTkMessagebox(icon="cancel",
+                                        message=self.lang.msg_box_error_message,
+                                        title=self.lang.msg_box_error_title)
+                    # It will exit only once 'OK' button is clicked
+                    msg.get()
+                    return
             header = self.export['header']
             self.database_name_entry.delete(0, "end")
             self.database_description_entry.delete(0, "end")
@@ -455,7 +475,8 @@ class ImportExportDB(CTkToplevel):
                                 title=self.lang.msg_box_error_title)
             # It will exit only once 'OK' button is clicked
             msg.get()
-            exit(1)
+            return
+            # exit(1)
 
         self.merge_databases(decrypted_entries)
         self.update_list()
@@ -465,7 +486,12 @@ class ImportExportDB(CTkToplevel):
 
     def open_keyfile_filedialog(self) -> None:
         files = [('All files', '*.*')]
-        file = askopenfile(filetypes=files)
+        if name == 'nt':
+            defaultextension = '*.*'
+        else:
+            defaultextension = None
+
+        file = askopenfile(filetypes=files, defaultextension=defaultextension)
         if locals()['file'] is not None:
             self.key_file_status = True
             self.path_to_keyfile = file.name

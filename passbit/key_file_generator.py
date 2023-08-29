@@ -9,6 +9,7 @@ from CTkMessagebox import CTkMessagebox
 from os.path import basename, join
 from uuid import uuid4
 from secrets import token_bytes, choice
+from os import name
 
 
 class KeyFileGenerator(CTkToplevel):
@@ -16,6 +17,7 @@ class KeyFileGenerator(CTkToplevel):
         super().__init__()
         self.lang = KeyFileGeneratorPy()
         self.amount_of_cats = 1
+        self.after(100, self.lift)
         self.title(self.lang.title)
 
         self.columnconfigure(0, weight=1)
@@ -94,7 +96,12 @@ class KeyFileGenerator(CTkToplevel):
 
     def random_cat_filedialog(self):
         files = [('Photo', '.jpg'), ('All files', '*.*')]
-        file = asksaveasfile(filetypes=files)
+        if name == 'nt':
+            defaultextension = '*.*'
+        else:
+            defaultextension = None
+
+        file = asksaveasfile(filetypes=files, defaultextension=defaultextension)
         # Checking if file was selected
         if locals()['file'] is not None:
             self.cat_path = file.name
@@ -164,7 +171,12 @@ class KeyFileGenerator(CTkToplevel):
 
     def select_random_file(self):
         files = [('Binary file', '.bin'), ('All files', '*.*')]
-        file = asksaveasfile(filetypes=files)
+        if name == 'nt':
+            defaultextension = '*.*'
+        else:
+            defaultextension = None
+
+        file = asksaveasfile(filetypes=files, defaultextension=defaultextension)
         if locals()['file'] is not None:
             self.random_file_path = file.name
             filename = basename(self.random_file_path)

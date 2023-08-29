@@ -1,7 +1,7 @@
 from customtkinter import CTkToplevel, CTkButton, CTkLabel, CTkEntry,\
     CTkFrame, CTkScrollableFrame, CTkFont, StringVar, CTkCheckBox
 from tkinter import filedialog
-from sqlite3 import connect as sql_connect
+from sqlite3 import connect as sql_connect, OperationalError, DatabaseError
 from argon2.low_level import hash_secret_raw
 from argon2 import Type
 from Crypto.Cipher import AES
@@ -25,6 +25,7 @@ class OpenDB(CTkToplevel):
         shows entries (right frame) and database-related buttons (left frame)"""
         super().__init__()
         self.lang = OpenDBPy()
+        self.after(100, self.lift)
         self.key_file_status = False
 
         self.title(self.lang.title)
@@ -100,7 +101,14 @@ class OpenDB(CTkToplevel):
 
         self.db = sql_connect(self.db_path)
         self.c = self.db.cursor()
-        self.c.execute("SELECT * FROM db_header")
+        try:
+            self.c.execute("SELECT * FROM db_header")
+        except (OperationalError, DatabaseError):
+            msg = CTkMessagebox(icon="cancel",
+                                title=self.lang.open_db_msg_title,
+                                message=self.lang.not_db_message)
+            msg.get()
+            return
         output = self.c.fetchall()[0]
 
         time_cost = output[3]
@@ -139,8 +147,7 @@ class OpenDB(CTkToplevel):
             self.destroy()
             # It will exit only once 'OK' button is clicked
             msg.get()
-
-            exit(1)
+            return
 
         # Clearing window
         for widget in self.winfo_children():

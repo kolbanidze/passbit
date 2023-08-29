@@ -29,6 +29,7 @@ class ModifyDatabase(CTkToplevel):
         self.c = cursor
         self.master_key = master_key
         self.exit_function = exit_function
+        self.after(100, self.lift)
 
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)

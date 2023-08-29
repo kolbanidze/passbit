@@ -8,6 +8,7 @@ from Crypto.Cipher import AES
 from argon2.low_level import hash_secret_raw
 from argon2 import Type
 from os.path import basename
+from os import name as os_name
 from CTkMessagebox import CTkMessagebox
 from .language import CreateDBPy
 from .key_file_generator import KeyFileGenerator
@@ -18,6 +19,7 @@ class CreateDB(CTkToplevel):
         """Creates user interface"""
         super().__init__()
         self.lang = CreateDBPy()
+        self.after(100, self.lift)
         # False - key file wasn't added
         # True - key file was added
         self.key_file_status = False
@@ -244,7 +246,13 @@ class CreateDB(CTkToplevel):
         """Handles filedialog"""
 
         files = [(f'{NAME} database', f'{FILE_EXTENSION}'), ('All files', '*.*')]
-        file = filedialog.asksaveasfile(filetypes=files)
+
+        if os_name == 'nt':
+            defaultextension = '*.*'
+        else:
+            defaultextension = None
+
+        file = filedialog.asksaveasfile(filetypes=files, defaultextension=defaultextension)
         # Checking if db file was selected
         if locals()['file'] is not None:
             filename = basename(file.name)
@@ -257,7 +265,11 @@ class CreateDB(CTkToplevel):
 
     def open_keyfile_filedialog(self) -> None:
         files = [('All files', '*.*')]
-        file = filedialog.askopenfile(filetypes=files)
+        if os_name == 'nt':
+            defaultextension = '*.*'
+        else:
+            defaultextension = None
+        file = filedialog.askopenfile(filetypes=files, defaultextension=defaultextension)
         if locals()['file'] is not None:
             self.key_file_status = True
             self.path_to_keyfile = file.name

@@ -5,6 +5,13 @@
 
 Open-source cross-platform encrypted password manager
 
+# Features
+* TOTP support
+* Encrypted export/import support
+* Password generator (symbol, [english/russian words](https://xkcd.com/936/))
+* Fully customizable KDF parameters
+* Key file support
+
 # Security
 ## Storing secrets
 Valuable data (_name, description, login, password, totp_) is encrypted (AES 256-bit, EAX) in database storage. To open database you need to

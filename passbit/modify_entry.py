@@ -21,6 +21,7 @@ class ModifyEntry(CTkToplevel):
         self.c = c
         self.db = db
         self.update_list = update_list_function
+        self.after(100, self.lift)
 
         name_label = CTkLabel(self, text=self.lang.name)
         self.name_entry = CTkEntry(self)

@@ -18,6 +18,7 @@ class ShowInfo(CTkToplevel):
         self.entry_content = entry_content
         self.title(self.lang.title)
         self.resizable(False, False)
+        self.after(100, self.lift)
 
         uuid_label = CTkLabel(self, text="UUID")
         name_label = CTkLabel(self, text=self.lang.name)

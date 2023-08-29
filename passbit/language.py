@@ -52,6 +52,7 @@ class OpenDBPy:
             self.open_db_msg_title = "Error"
             self.open_db_msg_message = "Master key verification failed. Check your password."
             self.master_key_verification_failed = "Master key verification FAILED."
+            self.not_db_message = "Selected file isn't database"
 
             # OpenDB.open_db after opening
             self.create_entry_btn = "Create entry"
@@ -88,6 +89,7 @@ class OpenDBPy:
             self.master_key_verification_ok = "Мастер ключ был успешно верифицирован"
             self.open_db_msg_title = "Ошибка"
             self.open_db_msg_message = "Произошла ошибка во время верификации мастер ключа. Проверьте пароль."
+            self.not_db_message = "Выбранный файл не является базой данных"
 
             # OpenDB.open_db after opening
             self.create_entry_btn = "Создать запись"
@@ -238,6 +240,8 @@ class ShowDbInfoPy:
             self.memory_cost = "Memory usage"
             self.parallelism = "Parallelism"
             self.close = "Close"
+            self.msg_title = "Error"
+            self.message = "Selected file isn't database"
         elif lang == 'ru':
             self.title = "Информация о БД"
             self.open_db = "Открыть БД"
@@ -248,6 +252,8 @@ class ShowDbInfoPy:
             self.memory_cost = "Использование памяти"
             self.parallelism = "Параллелизм"
             self.close = "Закрыть"
+            self.msg_title = "Ошибка"
+            self.message = "Выбранный файл не является базой данных"
         else:
             raise UnsupportedLanguage()
 
@@ -275,7 +281,7 @@ class ImportExportDbPy:
             self.import_database = "Import database"
             self.uuid_saved_part_1 = "Entry with UUID"
             self.uuid_saved_part_2 = "is already saved in db."
-            self.msg_box_error_message = "An error occurred while decryption! Check your password"
+            self.msg_box_error_message = "An error occurred while decryption!"
             self.msg_box_error_title = "Error"
             self.keyfile_label_part_1 = "Keyfile"
             self.keyfile_btn = "Select keyfile"
@@ -301,7 +307,7 @@ class ImportExportDbPy:
             self.import_database = "Импортировать БД"
             self.uuid_saved_part_1 = "Запись с UUID"
             self.uuid_saved_part_2 = "уже сохранена в БД."
-            self.msg_box_error_message = "Произошла ошибка во время расшифровки. Проверьте пароль"
+            self.msg_box_error_message = "Произошла ошибка во время расшифровки!"
             self.msg_box_error_title = "Ошибка"
             self.keyfile_label_part_1 = "Файл-ключ"
             self.keyfile_btn = "Выбрать файл-ключ"

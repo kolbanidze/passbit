@@ -59,8 +59,7 @@ There is 2 supported languages for generating word password: english and russian
 For generating random passwords it uses in-built _secrets_ library
 
 ## Generating key file
-If you want to increase security of your database consider adding key file. But if you can't select key file you can simply
-generate it.
+If you want to increase security of your database consider adding key file. 
 
 Since key file could be any file there is 3 options in generating key file:
 random bytes, 1 random cat image, a lot of cats images (amount of cats can be easily edited with slider)
