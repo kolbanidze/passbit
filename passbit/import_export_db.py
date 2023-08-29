@@ -31,7 +31,7 @@ class ImportExportDB(CTkToplevel):
         super().__init__()
         self.lang = ImportExportDbPy()
         self.key_file_status = False
-        self.after(100, self.lift)
+        self.after(243, self.lift)
 
         self.title(self.lang.title)
         self.db = db

@@ -19,7 +19,7 @@ class CreateDB(CTkToplevel):
         """Creates user interface"""
         super().__init__()
         self.lang = CreateDBPy()
-        self.after(100, self.lift)
+        self.after(243, self.lift)
         # False - key file wasn't added
         # True - key file was added
         self.key_file_status = False

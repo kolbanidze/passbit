@@ -11,7 +11,7 @@ class CreateEntry(CTkToplevel):
     def __init__(self, master_key, db, c, self_update_entries) -> None:
         super().__init__()
         self.lang = CreateEntryPy()
-        self.after(100, self.lift)
+        self.after(243, self.lift)
         self.master_key = master_key
         self.db = db
         self.c = c

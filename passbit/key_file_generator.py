@@ -17,7 +17,7 @@ class KeyFileGenerator(CTkToplevel):
         super().__init__()
         self.lang = KeyFileGeneratorPy()
         self.amount_of_cats = 1
-        self.after(100, self.lift)
+        self.after(243, self.lift)
         self.title(self.lang.title)
 
         self.columnconfigure(0, weight=1)

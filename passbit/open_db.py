@@ -25,7 +25,7 @@ class OpenDB(CTkToplevel):
         shows entries (right frame) and database-related buttons (left frame)"""
         super().__init__()
         self.lang = OpenDBPy()
-        self.after(100, self.lift)
+        self.after(243, self.lift)
         self.key_file_status = False
 
         self.title(self.lang.title)

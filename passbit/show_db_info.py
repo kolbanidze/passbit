@@ -13,7 +13,7 @@ class ShowDBInfo(CTkToplevel):
         super().__init__()
         self.lang = ShowDbInfoPy()
         self.title(self.lang.title)
-        self.after(100, self.lift)
+        self.after(243, self.lift)
 
         self.columnconfigure(0, weight=2)
         open_db_btn = CTkButton(self, text=self.lang.open_db,

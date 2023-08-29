@@ -24,7 +24,7 @@ class PasswordGenerator(CTkToplevel):
         self.active_frame = CTkFrame(self)
         self.active_frame.columnconfigure(0, weight=1)
         self.active_frame.grid(row=1, sticky="nsew")
-        self.after(100, self.lift)
+        self.after(243, self.lift)
 
         self.symbol_password()
 

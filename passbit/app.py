@@ -15,7 +15,7 @@ class App(CTk):
         self.lang = AppPy()
         self.title(NAME)
         self.resizable(False, False)
-        self.after(100, self.lift)
+        self.after(243, self.lift)
 
         self.columnconfigure(0, weight=2)
 
