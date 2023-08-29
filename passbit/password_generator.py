@@ -115,7 +115,7 @@ class PasswordGenerator(CTkToplevel):
         assert language == 'English' or language == 'Russian', "Language that you have selected isn't supported"
 
         word_file = resource_filename('passbit', f'words/{language.lower()}_words_10k.txt')
-        with open(word_file, 'r') as file:
+        with open(word_file, 'r', encoding='utf-8') as file:
             words_list = file.read().split()
 
         words = []

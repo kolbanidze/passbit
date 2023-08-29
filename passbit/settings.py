@@ -18,7 +18,7 @@ def get_os_language() -> str:
             return 'en'
 
 
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 NAME = 'PassBit'
 
 # PassBit DataBase
