@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=65.5.1", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "PassBit"
+version = "0.1.0"
+description = "Open-source cross-platform encrypted password manager"
+readme = "README.md"
+authors = [{name="Kolbanidze"}]
+license = {file="LICENSE"}
+
+classifiers = [
+        "Development Status :: 4 - Beta",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "Natural Language :: Russian",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+]
+keywords = ["Password manager", "Encrypted storage", "Encrypted passwords",
+    "AES", "Argon2ID", "Password", "Password storage"]
+dependencies = ["argon2-cffi", "CTkMessagebox", "customtkinter", "pycryptodome", "pyotp", "pyperclip", "Requests"]
+requires-python = ">=3.6"
+
+[project.urls]
+Homepage = "https://github.com/kolbanidze/passbit"
