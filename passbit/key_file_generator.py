@@ -1,7 +1,7 @@
 from customtkinter import CTkToplevel, CTkSegmentedButton, CTkFrame, CTkLabel, CTkButton, \
     CTkSlider, CTkEntry, CTkFont
 from .language import KeyFileGeneratorPy
-from tkinter.filedialog import asksaveasfile, askdirectory
+from tkinter.filedialog import asksaveasfilename, askdirectory, asksaveasfile
 from requests import get
 from json import loads as json_decode
 from .settings import THE_CAT_API_URL
@@ -10,6 +10,9 @@ from os.path import basename, join
 from uuid import uuid4
 from secrets import token_bytes, choice
 from os import name
+from multiprocessing import Pool
+from functools import partial
+from json import JSONDecodeError
 
 
 class KeyFileGenerator(CTkToplevel):
@@ -37,7 +40,7 @@ class KeyFileGenerator(CTkToplevel):
 
     def random_cat(self):
         self.file_label = CTkLabel(self.active_frame,
-                              text=f"{self.lang.file_label}: {self.lang.select_file_first}")
+                                   text=f"{self.lang.file_label}: {self.lang.select_file_first}")
         self.file_label.pack(pady=10, padx=10)
         select_file_btn = CTkButton(self.active_frame,
                                     text=self.lang.select_file,
@@ -47,8 +50,14 @@ class KeyFileGenerator(CTkToplevel):
         self.download_photo = CTkButton(self.active_frame,
                                         text=self.lang.download_photo,
                                         state="disabled",
-                                        command=lambda: self.download_cat_photo(self.cat_path))
+                                        command=lambda: self.download_cat(self.cat_path))
         self.download_photo.pack(pady=10, padx=10)
+
+    def download_cat(self, cat_path: str):
+        self.download_cat_photo(cat_path)
+        CTkMessagebox(icon="check",
+                      title=self.lang.msg_box_title,
+                      message=self.lang.msg_box_message)
 
     def random_cats(self):
         self.amount_of_cats_label = CTkLabel(self.active_frame,
@@ -86,46 +95,45 @@ class KeyFileGenerator(CTkToplevel):
         self.lift()
 
     def download_cats(self):
-        for _ in range(self.amount_of_cats):
-            # extension will be added
-            self.download_cat_photo(cat_path=join(self.cat_dir, str(uuid4())),
-                                    show_success_message=False)
+        with Pool() as pool:
+            command = partial(self.download_cat_photo, cat_path=self.cat_dir, is_folder=True)
+            pool.starmap(command, [() for _ in range(self.amount_of_cats)])
+
         CTkMessagebox(icon="check",
                       title=self.lang.msg_box_title,
                       message=self.lang.msg_box_cats_message)
 
     def random_cat_filedialog(self):
-        files = [('Photo', '.jpg'), ('All files', '*.*')]
-        if name == 'nt':
-            defaultextension = '*.*'
-        else:
-            defaultextension = None
-
-        file = asksaveasfile(filetypes=files, defaultextension=defaultextension)
+        file = asksaveasfilename()
         # Checking if file was selected
-        if locals()['file'] is not None:
-            self.cat_path = file.name
+        if file:
+            self.cat_path = file
 
             self.download_photo.configure(state="normal")
             self.file_label.configure(text=f"{self.lang.file_label}: {basename(self.cat_path)}",
                                       font=CTkFont(underline=True))
         self.lift()
 
-    def download_cat_photo(self, cat_path: str, show_success_message: bool = True):
+    @staticmethod
+    def download_cat_photo(cat_path: str, is_folder: bool = False):
         cat_json = get(THE_CAT_API_URL).content
-        cat_photo_url = json_decode(cat_json)[0]['url']
+        try:
+            cat_photo_url = json_decode(cat_json)[0]['url']
+        except JSONDecodeError:
+            print("Server response:", cat_json.decode('utf-8'))
+            print("An error occurred while decoding json. May be you have hit the rate limit?")
+            return
+
         extension = cat_photo_url.split('.')[-1]
         cat_photo = get(cat_photo_url).content
 
-        full_cat_path = cat_path + f'.{extension}'
+        if is_folder:
+            full_cat_path = join(cat_path, str(uuid4())) + f'.{extension}'
+        else:
+            full_cat_path = cat_path + f'.{extension}'
 
         with open(full_cat_path, 'bw') as file:
             file.write(cat_photo)
-
-        if show_success_message:
-            CTkMessagebox(icon="check",
-                          title=self.lang.msg_box_title,
-                          message=self.lang.msg_box_message)
 
     def clear_active_frame(self) -> None:
         for widget in self.active_frame.winfo_children():
